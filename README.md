@@ -86,6 +86,12 @@ The following evaluation metrics are calculated:
 -   Confusion Matrix
 -   Classification Report
 
+In addition, a results table is built for **every K from 1 to 30** (for
+both Sepal and Petal) containing the cross-validation Macro F1 and
+Accuracy, plus the Test Macro F1 and Test Accuracy. The best K is
+highlighted in bold. The tables are printed to the console and saved to
+the `results/` folder as `.md` and `.csv` files.
+
 ### 7. Visualization
 
 The project generates the following visualizations:
@@ -124,6 +130,10 @@ Iris-KNN-Classification/
 │
 ├── main.py
 │
+├── results/
+│   ├── sepal_all_k.csv / .md
+│   └── petal_all_k.csv / .md
+│
 └── README.md
 ```
 
@@ -138,19 +148,98 @@ Iris-KNN-Classification/
 python main.py
 ```
 
-## Expected Results
+## Results
 
-After execution, the program identifies the optimal K value for both
-feature groups.
+The best K is selected using the **mean 5-Fold CV Macro F1-Score** on the
+training set only. The Test columns are shown for information and are
+**not** used to choose K. If several K values share the same CV F1, the
+smallest K is chosen (the default `GridSearchCV` behavior).
 
-The final comparison includes:
+### Sepal Features (Sepal Length, Sepal Width)
 
-  Feature Group   Optimal K                  Test Accuracy   Test Macro F1
-  --------------- -------------------------- --------------- ---------------
-  Sepal           Automatically determined   Calculated      Calculated
-  Petal           Automatically determined   Calculated      Calculated
+**Best K = 5** (CV Macro F1 = 0.7903)
 
-*The actual values are generated when the program is executed.*
+| K | CV Macro F1 | CV Accuracy | Test Macro F1 | Test Accuracy |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | 0.7749 | 0.7750 | 0.6931 | 0.7000 |
+| 2 | 0.7565 | 0.7667 | 0.5378 | 0.5667 |
+| 3 | 0.7566 | 0.7583 | 0.6512 | 0.6667 |
+| 4 | 0.7747 | 0.7833 | 0.7613 | 0.7667 |
+| **5 (best)** | **0.7903** | **0.7917** | **0.6992** | **0.7000** |
+| 6 | 0.7665 | 0.7750 | 0.6337 | 0.6667 |
+| 7 | 0.7456 | 0.7500 | 0.7333 | 0.7333 |
+| 8 | 0.7525 | 0.7583 | 0.6528 | 0.6667 |
+| 9 | 0.7514 | 0.7583 | 0.6633 | 0.6667 |
+| 10 | 0.7514 | 0.7583 | 0.7222 | 0.7333 |
+| 11 | 0.7601 | 0.7667 | 0.7661 | 0.7667 |
+| 12 | 0.7670 | 0.7750 | 0.7661 | 0.7667 |
+| 13 | 0.7683 | 0.7750 | 0.6992 | 0.7000 |
+| 14 | 0.7683 | 0.7750 | 0.6992 | 0.7000 |
+| 15 | 0.7683 | 0.7750 | 0.6992 | 0.7000 |
+| 16 | 0.7776 | 0.7833 | 0.6992 | 0.7000 |
+| 17 | 0.7695 | 0.7750 | 0.7306 | 0.7333 |
+| 18 | 0.7776 | 0.7833 | 0.7306 | 0.7333 |
+| 19 | 0.7695 | 0.7750 | 0.7306 | 0.7333 |
+| 20 | 0.7864 | 0.7917 | 0.7333 | 0.7333 |
+| 21 | 0.7700 | 0.7750 | 0.7306 | 0.7333 |
+| 22 | 0.7774 | 0.7833 | 0.5960 | 0.6000 |
+| 23 | 0.7774 | 0.7833 | 0.7306 | 0.7333 |
+| 24 | 0.7678 | 0.7750 | 0.7306 | 0.7333 |
+| 25 | 0.7774 | 0.7833 | 0.7306 | 0.7333 |
+| 26 | 0.7687 | 0.7750 | 0.6992 | 0.7000 |
+| 27 | 0.7607 | 0.7667 | 0.7306 | 0.7333 |
+| 28 | 0.7678 | 0.7750 | 0.7306 | 0.7333 |
+| 29 | 0.7678 | 0.7750 | 0.7306 | 0.7333 |
+| 30 | 0.7678 | 0.7750 | 0.6992 | 0.7000 |
+
+### Petal Features (Petal Length, Petal Width)
+
+**Best K = 4** (CV Macro F1 = 0.9665)
+
+| K | CV Macro F1 | CV Accuracy | Test Macro F1 | Test Accuracy |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | 0.9413 | 0.9417 | 0.9666 | 0.9667 |
+| 2 | 0.9410 | 0.9417 | 0.9327 | 0.9333 |
+| 3 | 0.9496 | 0.9500 | 0.9666 | 0.9667 |
+| **4 (best)** | **0.9665** | **0.9667** | **1.0000** | **1.0000** |
+| 5 | 0.9665 | 0.9667 | 0.9666 | 0.9667 |
+| 6 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 7 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 8 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 9 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 10 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 11 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 12 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 13 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 14 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 15 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 16 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 17 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 18 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 19 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 20 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 21 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 22 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 23 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 24 | 0.9580 | 0.9583 | 0.9333 | 0.9333 |
+| 25 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 26 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 27 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 28 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 29 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+| 30 | 0.9665 | 0.9667 | 0.9333 | 0.9333 |
+
+### Summary
+
+| Feature Group | Best K | CV Macro F1 | Test Accuracy | Test Macro F1 |
+|:---:|:---:|:---:|:---:|:---:|
+| Sepal | 5 | 0.7903 | 0.7000 | 0.6992 |
+| Petal | 4 | 0.9665 | 1.0000 | 1.0000 |
+
+> **Note:** these numbers were generated with the standard Iris dataset
+> (`random_state=42`). If your local `data/iris.csv` differs slightly,
+> the values can change, so re-run the code to regenerate the tables
+> in `results/`.
 
 ## Conclusion
 
